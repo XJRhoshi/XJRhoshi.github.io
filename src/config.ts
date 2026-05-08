@@ -50,7 +50,7 @@ export const siteConfig: SiteConfig = {
 	featurePages: {
 		anime: false,
 		diary: false,
-		friends: false,
+		friends: true,
 		projects: false,
 		skills: false,
 		timeline: false,
@@ -269,6 +269,7 @@ export const navBarConfig: NavBarConfig = {
 	links: [
 		LinkPreset.Home,
 		LinkPreset.Archive,
+		LinkPreset.Friends,
 		LinkPreset.About,
 		{
 			name: "链接",

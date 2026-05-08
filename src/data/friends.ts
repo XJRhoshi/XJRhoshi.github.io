@@ -1,5 +1,5 @@
-// 友情链接数据配置
-// 用于管理友情链接页面的数据
+// 友情链接数据配置，用于 `/friends/` 页面卡片。
+// 在 friendsData 中增删改条目即可；每项 id 需在数组内唯一。部署前可检查头像外链是否可被浏览器加载（防盗链可能导致裂图）。
 
 export interface FriendItem {
 	id: number;
