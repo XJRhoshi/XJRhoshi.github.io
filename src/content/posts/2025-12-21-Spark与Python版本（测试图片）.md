@@ -12,7 +12,7 @@ lang: ""
 
 遇见问题：
 
-![https://i-blog.csdnimg.cn/direct/efd298c0ff1640709405a46d3861f07b.png](https://i-blog.csdnimg.cn/direct/efd298c0ff1640709405a46d3861f07b.png)
+![Spark 与 Python 版本报错截图](/img/posts/spark-python-csdn-note.png)
 
 方法 ：升级 Spark 至 3.x 版本
 
