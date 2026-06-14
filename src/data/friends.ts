@@ -28,6 +28,14 @@ export const friendsData: FriendItem[] = [
 		siteurl: "https://enrong.me",
 		tags: ["Friends"],
 	},
+	{
+		id: 3,
+		title: "Sotr",
+		imgurl: "https://kira.moe/images/avatar0.jpg",
+		desc: "奇迹和魔法都是存在的",
+		siteurl: "https://kira.moe/",
+		tags: ["Friends"],
+	},
 ];
 
 // 获取所有友情链接数据
