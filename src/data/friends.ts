@@ -20,6 +20,14 @@ export const friendsData: FriendItem[] = [
 		siteurl: "https://250king.top",
 		tags: ["Friends"],
 	},
+	{
+		id: 2,
+		title: "EnRonG",
+		imgurl: "https://cdn.nodeimage.com/i/TyiFoWTcNcCWD2apXW7Y1XthLe6nNxYC.png",
+		desc: "Keep being a better EnRonG.",
+		siteurl: "https://enrong.me",
+		tags: ["Friends"],
+	},
 ];
 
 // 获取所有友情链接数据
