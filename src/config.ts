@@ -438,7 +438,7 @@ export const musicPlayerConfig: MusicPlayerConfig = {
 	mode: "meting", // 音乐播放器模式，可选 "local" 或 "meting"
 	meting_api:
 		"https://meting.mysqil.com/api?server=:server&type=:type&id=:id&auth=:auth&r=:r", // Meting API 地址
-	id: "14164869977", // 网易云歌单 ID，可替换为你自己的歌单
+	id: "8453457927", // 网易云歌单 ID，可替换为你自己的歌单 Uru'sBlogMusic
 	server: "netease", // 音乐源：netease / tencent / kugou 等
 	type: "playlist", // 播单类型
 };
