@@ -29,6 +29,13 @@ const subtitle = i18n(I18nKey.visionSubtitle);
 		<div class="card-base z-10 px-4 sm:px-9 py-6 relative w-full">
 			<PageHeader title={title} subtitle={subtitle} />
 
+			<div
+				class="mb-6 rounded-[var(--radius-large)] border border-[var(--line-divider)] bg-[color-mix(in_oklch,var(--primary)_10%,var(--card-bg))] px-4 py-3 text-sm leading-relaxed text-black/70 dark:text-white/70"
+				role="status"
+			>
+				本模块正在建设中，具体的界面参考米酒的博客。
+			</div>
+
 			<VisionDeck
 				slides={visionSlides}
 				prevLabel={i18n(I18nKey.visionPrev)}
