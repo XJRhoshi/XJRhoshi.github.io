@@ -5,7 +5,7 @@
   <link href="https://xjrhoshi.github.io/" rel="alternate" type="text/html"/>
   <link href="https://xjrhoshi.github.io/atom.xml" rel="self" type="application/atom+xml"/>
   <id>https://xjrhoshi.github.io/</id>
-  <updated>2026-06-15T10:29:27.019Z</updated>
+  <updated>2026-06-15T10:31:28.126Z</updated>
   <language>zh_CN</language>
   <entry>
     <title>大学的思考总结与展望</title>
@@ -102,6 +102,7 @@
       <name>星间润 · HoshikanUru</name>
     </author>
     <category term="人文社科"></category>
+    <category term="随笔"></category>
   </entry>
   <entry>
     <title>LaTeX公式识别</title>
