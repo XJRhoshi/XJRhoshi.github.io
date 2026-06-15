@@ -251,6 +251,15 @@ export const zh_TW: Translation = {
 	[Key.timelineStartDate]: "開始日期",
 	[Key.timelineDuration]: "持續時間",
 
+	// 願景版頁面
+	[Key.vision]: "願景版",
+	[Key.visionSubtitle]: "面向未來的方向與承諾",
+	[Key.visionPrev]: "上一頁",
+	[Key.visionNext]: "下一頁",
+	[Key.visionHint]: "← → 或空格切換幻燈片",
+	[Key.visionFullscreen]: "全螢幕演示",
+	[Key.visionExitFullscreen]: "退出全螢幕",
+
 	// 其他
 	[Key.noData]: "暫無資料",
 

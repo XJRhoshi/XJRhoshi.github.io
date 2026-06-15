@@ -1,0 +1,50 @@
+---
+import { VisionDeck } from "@components/features/vision";
+import { PageHeader } from "@components/features/page-header";
+import MainGridLayout from "@layouts/MainGridLayout.astro";
+
+import { siteConfig } from "../config";
+import { visionSlides } from "../data/vision";
+import I18nKey from "../i18n/i18nKey";
+import { i18n } from "../i18n/translation";
+
+export const prerender = true;
+
+if (!siteConfig.featurePages.vision) {
+	return Astro.redirect("/404/");
+}
+
+const title = i18n(I18nKey.vision);
+const subtitle = i18n(I18nKey.visionSubtitle);
+---
+
+<MainGridLayout title={title} description={subtitle}>
+	<script>
+		import("../scripts/right-sidebar-layout.js");
+	</script>
+
+	<div
+		class="flex w-full rounded-[var(--radius-large)] overflow-hidden relative min-h-32"
+	>
+		<div class="card-base z-10 px-4 sm:px-9 py-6 relative w-full">
+			<PageHeader title={title} subtitle={subtitle} />
+
+			<VisionDeck
+				slides={visionSlides}
+				prevLabel={i18n(I18nKey.visionPrev)}
+				nextLabel={i18n(I18nKey.visionNext)}
+				hintLabel={i18n(I18nKey.visionHint)}
+				fullscreenLabel={i18n(I18nKey.visionFullscreen)}
+				exitFullscreenLabel={i18n(I18nKey.visionExitFullscreen)}
+				client:load
+			/>
+
+			<p class="mt-4 text-sm text-black/45 dark:text-white/45">
+				幻灯片内容可在
+				<code class="px-1.5 py-0.5 rounded bg-black/5 dark:bg-white/5"
+					>src/data/vision.ts</code
+				> 中编辑。
+			</p>
+		</div>
+	</div>
+</MainGridLayout>

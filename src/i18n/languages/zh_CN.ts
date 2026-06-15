@@ -212,6 +212,15 @@ export const zh_CN: Translation = {
 	[Key.timelineStartDate]: "开始日期",
 	[Key.timelineDuration]: "持续时间",
 
+	// 愿景版页面
+	[Key.vision]: "愿景版",
+	[Key.visionSubtitle]: "面向未来的方向与承诺",
+	[Key.visionPrev]: "上一页",
+	[Key.visionNext]: "下一页",
+	[Key.visionHint]: "← → 或空格切换幻灯片",
+	[Key.visionFullscreen]: "全屏演示",
+	[Key.visionExitFullscreen]: "退出全屏",
+
 	// 密码保护
 	[Key.passwordProtected]: "密码保护",
 	[Key.passwordProtectedTitle]: "此内容受密码保护",

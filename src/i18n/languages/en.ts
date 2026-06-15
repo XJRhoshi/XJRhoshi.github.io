@@ -267,6 +267,15 @@ export const en: Translation = {
 	[Key.timelineStartDate]: "Start Date",
 	[Key.timelineDuration]: "Duration",
 
+	// Vision page
+	[Key.vision]: "Vision Board",
+	[Key.visionSubtitle]: "Future directions and commitments",
+	[Key.visionPrev]: "Previous slide",
+	[Key.visionNext]: "Next slide",
+	[Key.visionHint]: "Use ← → or Space to navigate",
+	[Key.visionFullscreen]: "Fullscreen",
+	[Key.visionExitFullscreen]: "Exit fullscreen",
+
 	// Password Protection
 	[Key.passwordProtected]: "Password Protected",
 	[Key.passwordProtectedTitle]: "This content is password protected",

@@ -208,6 +208,15 @@ enum I18nKey {
 	timelineStartDate = "timelineStartDate",
 	timelineDuration = "timelineDuration",
 
+	// Vision page
+	vision = "vision",
+	visionSubtitle = "visionSubtitle",
+	visionPrev = "visionPrev",
+	visionNext = "visionNext",
+	visionHint = "visionHint",
+	visionFullscreen = "visionFullscreen",
+	visionExitFullscreen = "visionExitFullscreen",
+
 	// 密码保护
 	passwordProtected = "passwordProtected",
 	passwordProtectedTitle = "passwordProtectedTitle",

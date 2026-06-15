@@ -269,6 +269,15 @@ export const ja: Translation = {
 	[Key.timelineStartDate]: "開始日",
 	[Key.timelineDuration]: "期間",
 
+	// ビジョンボード
+	[Key.vision]: "ビジョン版",
+	[Key.visionSubtitle]: "未来への方向性とコミットメント",
+	[Key.visionPrev]: "前へ",
+	[Key.visionNext]: "次へ",
+	[Key.visionHint]: "← → または Space で切り替え",
+	[Key.visionFullscreen]: "全画面",
+	[Key.visionExitFullscreen]: "全画面を終了",
+
 	// パスワード保護
 	[Key.passwordProtected]: "パスワードで保護されています",
 	[Key.passwordProtectedTitle]:

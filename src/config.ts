@@ -56,6 +56,7 @@ export const siteConfig: SiteConfig = {
 		timeline: false,
 		albums: false,
 		devices: false,
+		vision: true,
 	},
 
 	// 顶栏标题配置
@@ -270,6 +271,7 @@ export const navBarConfig: NavBarConfig = {
 		LinkPreset.Home,
 		LinkPreset.Archive,
 		LinkPreset.Friends,
+		LinkPreset.Vision,
 		LinkPreset.About,
 		{
 			name: "链接",
