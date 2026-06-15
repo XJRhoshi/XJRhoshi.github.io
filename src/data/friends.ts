@@ -36,6 +36,14 @@ export const friendsData: FriendItem[] = [
 		siteurl: "https://kira.moe/",
 		tags: ["Friends"],
 	},
+	{
+		id: 4,
+		title: "涟漪Rippin",
+		imgurl: "https://void-island.com/author_icon.svg",
+		desc: "涟漪酱",
+		siteurl: "https://void-island.com/",
+		tags: ["Friends"],
+	},
 ];
 
 // 获取所有友情链接数据
