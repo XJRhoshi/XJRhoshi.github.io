@@ -5,9 +5,14 @@ export function normalizeCategories(category: PostCategory): string[] {
 		return [];
 	}
 	if (Array.isArray(category)) {
-		return category.map((c) => c.trim()).filter(Boolean);
+		return category.map((c) => String(c).trim()).filter(Boolean);
 	}
-	const trimmed = category.trim();
+	if (typeof category === "object") {
+		return Object.values(category as Record<string, unknown>)
+			.map((c) => String(c).trim())
+			.filter(Boolean);
+	}
+	const trimmed = String(category).trim();
 	return trimmed ? [trimmed] : [];
 }
 

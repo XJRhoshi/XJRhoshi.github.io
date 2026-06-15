@@ -1,6 +1,4 @@
 export interface ArchivePanelProps {
-	tags: string[];
-	categories: string[];
 	sortedPosts: Post[];
 }
 
@@ -10,8 +8,8 @@ export interface Post {
 	data: {
 		title: string;
 		tags: string[];
-		category?: string;
-		published: Date;
+		categories: string[];
+		published: string;
 		alias?: string;
 		permalink?: string;
 	};

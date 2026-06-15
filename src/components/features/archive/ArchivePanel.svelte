@@ -1,32 +1,21 @@
 <script lang="ts">
 	import I18nKey from "@i18n/i18nKey";
 	import { i18n } from "@i18n/translation";
-	import {
-		hasAnyCategory,
-		normalizeCategories,
-		type PostCategory,
-	} from "@utils/category-utils";
-	import { onMount } from "svelte";
+	import { hasAnyCategory } from "@utils/category-utils";
+	import { onDestroy, onMount } from "svelte";
 
-	export let tags: string[];
-	export let categories: string[];
 	export let sortedPosts: Post[] = [];
-
-	const params = new URLSearchParams(window.location.search);
-	tags = params.has("tag") ? params.getAll("tag") : [];
-	categories = params.has("category") ? params.getAll("category") : [];
-	const uncategorized = params.get("uncategorized");
 
 	interface Post {
 		id: string;
-		url?: string; // 预计算的文章 URL
+		url?: string;
 		data: {
 			title: string;
 			tags: string[];
-			category?: PostCategory;
-			published: Date;
+			categories: string[];
+			published: string;
 			alias?: string;
-			permalink?: string; // 自定义固定链接
+			permalink?: string;
 		};
 	}
 
@@ -37,7 +26,16 @@
 
 	let groups: Group[] = [];
 
-	function formatDate(date: Date) {
+	function getPublishedTime(published: string): number {
+		return new Date(published).getTime();
+	}
+
+	function getPublishedYear(published: string): number {
+		return new Date(published).getFullYear();
+	}
+
+	function formatDate(published: string) {
+		const date = new Date(published);
 		const month = (date.getMonth() + 1).toString().padStart(2, "0");
 		const day = date.getDate().toString().padStart(2, "0");
 		return `${month}-${day}`;
@@ -47,40 +45,47 @@
 		return tagList.map((t) => `#${t}`).join(" ");
 	}
 
-	onMount(async () => {
-		let filteredPosts: Post[] = sortedPosts;
+	function applyFilters() {
+		const params = new URLSearchParams(window.location.search);
+		const filterTags = params.has("tag") ? params.getAll("tag") : [];
+		const filterCategories = params.has("category")
+			? params.getAll("category")
+			: [];
+		const uncategorized = params.get("uncategorized");
 
-		if (tags.length > 0) {
+		let filteredPosts = sortedPosts;
+
+		if (filterTags.length > 0) {
 			filteredPosts = filteredPosts.filter(
 				(post) =>
 					Array.isArray(post.data.tags) &&
-					post.data.tags.some((tag) => tags.includes(tag)),
+					post.data.tags.some((tag) => filterTags.includes(tag)),
 			);
 		}
 
-		if (categories.length > 0) {
+		if (filterCategories.length > 0) {
 			filteredPosts = filteredPosts.filter((post) =>
-				hasAnyCategory(post.data.category, categories),
+				hasAnyCategory(post.data.categories, filterCategories),
 			);
 		}
 
 		if (uncategorized) {
 			filteredPosts = filteredPosts.filter(
-				(post) => normalizeCategories(post.data.category).length === 0,
+				(post) => post.data.categories.length === 0,
 			);
 		}
 
-		// 按发布时间倒序排序，确保不受置顶影响
 		filteredPosts = filteredPosts
 			.slice()
 			.sort(
 				(a, b) =>
-					b.data.published.getTime() - a.data.published.getTime(),
+					getPublishedTime(b.data.published) -
+					getPublishedTime(a.data.published),
 			);
 
 		const grouped = filteredPosts.reduce(
 			(acc, post) => {
-				const year = post.data.published.getFullYear();
+				const year = getPublishedYear(post.data.published);
 				if (!acc[year]) {
 					acc[year] = [];
 				}
@@ -90,14 +95,31 @@
 			{} as Record<number, Post[]>,
 		);
 
-		const groupedPostsArray = Object.keys(grouped).map((yearStr) => ({
-			year: Number.parseInt(yearStr, 10),
-			posts: grouped[Number.parseInt(yearStr, 10)],
-		}));
+		groups = Object.keys(grouped)
+			.map((yearStr) => ({
+				year: Number.parseInt(yearStr, 10),
+				posts: grouped[Number.parseInt(yearStr, 10)],
+			}))
+			.sort((a, b) => b.year - a.year);
+	}
 
-		groupedPostsArray.sort((a, b) => b.year - a.year);
+	function handleNavigation() {
+		applyFilters();
+	}
 
-		groups = groupedPostsArray;
+	onMount(() => {
+		applyFilters();
+		window.addEventListener("popstate", handleNavigation);
+		document.addEventListener("astro:page-load", handleNavigation);
+		document.addEventListener("swup:contentReplaced", handleNavigation);
+		document.addEventListener("swup:page:view", handleNavigation);
+	});
+
+	onDestroy(() => {
+		window.removeEventListener("popstate", handleNavigation);
+		document.removeEventListener("astro:page-load", handleNavigation);
+		document.removeEventListener("swup:contentReplaced", handleNavigation);
+		document.removeEventListener("swup:page:view", handleNavigation);
 	});
 </script>
 
@@ -135,14 +157,12 @@
 					<div
 						class="flex flex-row justify-start items-center h-full"
 					>
-						<!-- date -->
 						<div
 							class="w-[15%] md:w-[10%] transition text-sm text-right text-50"
 						>
 							{formatDate(post.data.published)}
 						</div>
 
-						<!-- dot and line -->
 						<div
 							class="w-[15%] md:w-[10%] relative dash-line h-full flex items-center"
 						>
@@ -156,7 +176,6 @@
 							></div>
 						</div>
 
-						<!-- post title -->
 						<div
 							class="w-[70%] md:max-w-[65%] md:w-[65%] text-left font-bold
                      group-hover:translate-x-1 transition-all group-hover:text-[var(--primary)]
@@ -165,7 +184,6 @@
 							{post.data.title}
 						</div>
 
-						<!-- tag list -->
 						<div
 							class="hidden md:block md:w-[15%] text-left text-sm transition
                      whitespace-nowrap overflow-ellipsis overflow-hidden text-30"
