@@ -98,16 +98,19 @@ export function generatePostItems(): PostItem[] {
 		const titleLink = card.querySelector(
 			'a[href*="/posts/"].transition.group',
 		);
-		const categoryLink = card.querySelector(
+		const categoryLinks = card.querySelectorAll(
 			'a[href*="/categories/"].link-lg',
 		);
+		const category = Array.from(categoryLinks)
+			.map((link) => link.textContent?.trim() || "")
+			.filter(Boolean)
+			.join(" / ");
 		const pinnedIcon = titleLink?.querySelector('svg[data-icon="mdi:pin"]');
 
 		if (titleLink) {
 			const href = titleLink.getAttribute("href");
 			const title =
 				titleLink.textContent?.replace(/\s+/g, " ").trim() || "";
-			const category = categoryLink?.textContent?.trim() || "";
 			const pinned = !!pinnedIcon;
 
 			if (href && title) {

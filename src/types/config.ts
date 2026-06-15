@@ -319,7 +319,7 @@ export interface BlogPostData {
 	tags: string[];
 	draft?: boolean;
 	image?: string;
-	category?: string;
+	category?: string | string[];
 	pinned?: boolean;
 	prevTitle?: string;
 	prevSlug?: string;

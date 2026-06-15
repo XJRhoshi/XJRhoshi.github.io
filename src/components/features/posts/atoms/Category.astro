@@ -3,14 +3,17 @@ import { Icon } from "astro-icon/components";
 
 import I18nKey from "@/i18n/i18nKey";
 import { i18n } from "@/i18n/translation";
+import type { PostCategory } from "@/utils/category-utils";
+import { normalizeCategories } from "@/utils/category-utils";
 import { getCategoryUrl } from "@/utils/url-utils";
 
 interface Props {
-	category?: string;
+	category?: PostCategory;
 	class?: string;
 }
 
 const { category, class: className } = Astro.props;
+const categories = normalizeCategories(category);
 ---
 
 <div class:list={["flex items-center", className]}>
@@ -18,12 +21,32 @@ const { category, class: className } = Astro.props;
 		<Icon name="material-symbols:book-2-outline-rounded" class="text-xl" />
 	</div>
 	<div class="flex flex-row flex-nowrap items-center">
-		<a
-			href={getCategoryUrl(category || "")}
-			aria-label={`View all posts in the ${category} category`}
-			class="link-lg transition text-50 text-sm font-medium hover:text-[var(--primary)] dark:hover:text-[var(--primary)] whitespace-nowrap"
-		>
-			{category || i18n(I18nKey.uncategorized)}
-		</a>
+		{
+			categories.length > 0 ? (
+				categories.map((cat, i) => (
+					<>
+						<div
+							class:list={[
+								{ hidden: i === 0 },
+								"mx-1.5 text-[var(--meta-divider)] text-sm",
+							]}
+						>
+							/
+						</div>
+						<a
+							href={getCategoryUrl(cat)}
+							aria-label={`View all posts in the ${cat} category`}
+							class="link-lg transition text-50 text-sm font-medium hover:text-[var(--primary)] dark:hover:text-[var(--primary)] whitespace-nowrap"
+						>
+							{cat}
+						</a>
+					</>
+				))
+			) : (
+				<span class="text-50 text-sm font-medium">
+					{i18n(I18nKey.uncategorized)}
+				</span>
+			)
+		}
 	</div>
 </div>

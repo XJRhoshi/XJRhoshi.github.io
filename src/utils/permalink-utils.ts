@@ -1,6 +1,7 @@
 import type { CollectionEntry } from "astro:content";
 
 import { permalinkConfig } from "../config";
+import { getPrimaryCategory } from "./category-utils";
 import { removeFileExtension } from "./url-utils";
 
 // 文章 ID 映射缓存（用于存储按时间排序后的文章序号）
@@ -91,7 +92,7 @@ export function generatePermalinkSlug(post: CollectionEntry<"posts">): string {
 			rawPostname = removeFileExtension(filename);
 		}
 	}
-	const category = post.data.category || "uncategorized";
+	const category = getPrimaryCategory(post.data.category) || "uncategorized";
 
 	// 替换占位符
 	const slug = format

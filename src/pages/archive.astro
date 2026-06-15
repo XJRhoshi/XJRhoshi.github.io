@@ -5,6 +5,7 @@ import I18nKey from "@i18n/i18nKey";
 import { i18n } from "@i18n/translation";
 import MainGridLayout from "@layouts/MainGridLayout.astro";
 import { getSortedPostsList } from "@utils/content-utils";
+import { normalizeCategories } from "@utils/category-utils";
 
 import { siteConfig } from "../config";
 
@@ -26,11 +27,7 @@ const tags = [...new Set(posts.flatMap((post) => post.data.tags))];
 
 // 3. 提取所有分类 (去重且过滤掉 undefined)
 const categories = [
-	...new Set(
-		posts
-			.map((post) => post.data.category)
-			.filter((c): c is string => typeof c === "string"),
-	),
+	...new Set(posts.flatMap((post) => normalizeCategories(post.data.category))),
 ];
 ---
 

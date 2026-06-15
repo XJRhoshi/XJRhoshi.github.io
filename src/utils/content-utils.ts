@@ -1,5 +1,9 @@
 import I18nKey from "@i18n/i18nKey";
 import { i18n } from "@i18n/translation";
+import {
+	normalizeCategories,
+	categoriesShareMatch,
+} from "@utils/category-utils";
 import { initPostIdMap } from "@utils/permalink-utils";
 import { getCategoryUrl, getPostUrl } from "@utils/url-utils";
 import { type CollectionEntry, getCollection } from "astro:content";
@@ -115,19 +119,17 @@ export async function getCategoryList(): Promise<Category[]> {
 		return import.meta.env.PROD ? data.draft !== true : true;
 	});
 	const count: Record<string, number> = {};
-	allBlogPosts.forEach((post: { data: { category: string | null } }) => {
-		if (!post.data.category) {
+	allBlogPosts.forEach((post: { data: { category: string | string[] | null } }) => {
+		const categories = normalizeCategories(post.data.category);
+		if (categories.length === 0) {
 			const ucKey = i18n(I18nKey.uncategorized);
 			count[ucKey] = count[ucKey] ? count[ucKey] + 1 : 1;
 			return;
 		}
 
-		const categoryName =
-			typeof post.data.category === "string"
-				? post.data.category.trim()
-				: String(post.data.category).trim();
-
-		count[categoryName] = count[categoryName] ? count[categoryName] + 1 : 1;
+		for (const categoryName of categories) {
+			count[categoryName] = count[categoryName] ? count[categoryName] + 1 : 1;
+		}
 	});
 
 	const lst = Object.keys(count).sort((a, b) => {
@@ -228,7 +230,7 @@ export async function getRelatedPosts(
 
 	const currentTags = new Set(currentPost.data.tags || []);
 	const currentTokens = tokenizeTitle(currentPost.data.title);
-	const currentCategory = currentPost.data.category || "";
+	const currentCategory = currentPost.data.category;
 	const now = Date.now();
 
 	const scored = candidates.map((post) => {
@@ -250,9 +252,11 @@ export async function getRelatedPosts(
 			30 * Math.exp((-Math.LN2 * daysSincePublished) / 180);
 
 		// categoryBonus (0 or 10)
-		const postCategory = post.data.category || "";
+		const postCategory = post.data.category;
 		const categoryBonus =
-			currentCategory && postCategory && currentCategory === postCategory
+			currentCategory &&
+			postCategory &&
+			categoriesShareMatch(currentCategory, postCategory)
 				? 10
 				: 0;
 

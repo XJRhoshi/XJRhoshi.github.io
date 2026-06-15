@@ -1,4 +1,5 @@
 import { getSortedPosts } from "@/utils/content-utils";
+import { normalizeCategories } from "@/utils/category-utils";
 
 export async function GET() {
 	const posts = await getSortedPosts();
@@ -9,7 +10,7 @@ export async function GET() {
 			title: post.data.title,
 			description: post.data.description,
 			published: post.data.published.getTime(),
-			category: post.data.category || "",
+			category: normalizeCategories(post.data.category).join(", "),
 			password: !!post.data.password,
 		}))
 		// 按发布日期降序排列

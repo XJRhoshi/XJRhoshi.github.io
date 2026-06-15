@@ -5,6 +5,7 @@ import I18nKey from "../../../i18n/i18nKey";
 import { i18n } from "../../../i18n/translation";
 import { formatDateToYYYYMMDD } from "../../../utils/date-utils";
 import { getTagUrl } from "../../../utils/url-utils";
+import type { PostCategory } from "@/utils/category-utils";
 import { PublishedDate } from "./atoms";
 import { Category } from "./atoms";
 import { WordCount } from "./atoms";
@@ -14,7 +15,7 @@ import { EncryptedBadge } from "./atoms";
 interface Props {
 	published: Date;
 	updated?: Date;
-	category?: string;
+	category?: PostCategory;
 	tags?: string[];
 	hideUpdateDate?: boolean;
 	hideTagsForMobile?: boolean;

@@ -1,6 +1,11 @@
 <script lang="ts">
 	import I18nKey from "@i18n/i18nKey";
 	import { i18n } from "@i18n/translation";
+	import {
+		hasAnyCategory,
+		normalizeCategories,
+		type PostCategory,
+	} from "@utils/category-utils";
 	import { onMount } from "svelte";
 
 	export let tags: string[];
@@ -18,7 +23,7 @@
 		data: {
 			title: string;
 			tags: string[];
-			category?: string;
+			category?: PostCategory;
 			published: Date;
 			alias?: string;
 			permalink?: string; // 自定义固定链接
@@ -54,15 +59,15 @@
 		}
 
 		if (categories.length > 0) {
-			filteredPosts = filteredPosts.filter(
-				(post) =>
-					post.data.category &&
-					categories.includes(post.data.category),
+			filteredPosts = filteredPosts.filter((post) =>
+				hasAnyCategory(post.data.category, categories),
 			);
 		}
 
 		if (uncategorized) {
-			filteredPosts = filteredPosts.filter((post) => !post.data.category);
+			filteredPosts = filteredPosts.filter(
+				(post) => normalizeCategories(post.data.category).length === 0,
+			);
 		}
 
 		// 按发布时间倒序排序，确保不受置顶影响

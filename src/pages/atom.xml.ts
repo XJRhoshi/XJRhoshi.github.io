@@ -7,6 +7,7 @@ import sanitizeHtml from "sanitize-html";
 
 import { profileConfig, siteConfig } from "@/config";
 import { getSortedPosts } from "@/utils/content-utils";
+import { normalizeCategories } from "@/utils/category-utils";
 import { initPostIdMap } from "@/utils/permalink-utils";
 import { getPostUrl } from "@/utils/url-utils";
 
@@ -140,10 +141,9 @@ export async function GET(context: APIContext) {
       <name>${profileConfig.name}</name>
     </author>`;
 
-		// 添加分类标签
-		if (post.data.category) {
+		for (const cat of normalizeCategories(post.data.category)) {
 			atomFeed += `
-    <category term="${post.data.category}"></category>`;
+    <category term="${cat}"></category>`;
 		}
 
 		atomFeed += `
